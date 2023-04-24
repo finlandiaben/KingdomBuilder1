@@ -64,7 +64,10 @@ public class Gamestate {
     public void playBasedOnState(int mouseX, int mouseY) {
         //TODO: massive logic refactoring 
         switch (gameState) {
-            //major issue will be making sure the move selected actually has possible moves
+            /*
+            special cases: not done
+            moving extra actions: WHY IS ISUSED NOT WORKING AAAAAAAAAAAAAAAAAA
+             */
 
             case 1 -> {
                 /*
@@ -74,8 +77,7 @@ public class Gamestate {
 
                 if (players[turn].extraActionClicked(mouseX, mouseY) != null && players[turn].extraActionClicked(mouseX, mouseY).doesItMove() &&
                         !players[turn].extraActionClicked(mouseX, mouseY).isUsed() && players[turn].extraActionClicked(mouseX, mouseY).isIniated()) {
-
-                    //players[turn].extraActionClicked(mouseX, mouseY).doExtraAction(this, ?, ?);
+                    //todo
                     movingExtraActionToUse = players[turn].extraActionClicked(mouseX, mouseY).copy();
                     gameState = 2;
                     message = "Click which settlement you would like to move";
@@ -83,13 +85,14 @@ public class Gamestate {
                 else if (players[turn].extraActionClicked(mouseX, mouseY) != null && !players[turn].extraActionClicked(mouseX, mouseY).doesItMove() &&
                         !players[turn].extraActionClicked(mouseX, mouseY).isUsed() && players[turn].extraActionClicked(mouseX, mouseY).isIniated()) {
 
+                    //this works i think
                     players[turn].extraActionClicked(mouseX, mouseY).setAvailableMoves(board, players[turn], null);
                     message = "Click the highlighted hex you would like to settle";
                     gameState = 3;
                 }
                 else if (players[turn].mandatorySettlementsClicked(mouseX, mouseY) &&
                         players[turn].getMandatorySettlementPhase().equals(MandatorySettlementPhase.hasNotUsed)) {
-
+                    //this works for sure
                     players[turn].setMandatorySettlementPhase(MandatorySettlementPhase.isUsing);
                     board.setMandatorySettlementHexes(players[turn]);
                     message = "Click the highlighted hex you would like to settle";
@@ -104,32 +107,45 @@ public class Gamestate {
                  */
                 for (int i = 0; i < board.getAllHexes().size(); i++) {
 
-                    if (board.getAllHexes().get(i).isClicked(mouseX, mouseY) &&
-                            board.getAllHexes().get(i).getSettlement().getOwnerId() == turn) {
+                    if (board.getAllHexes().get(i).isClicked(mouseX, mouseY) && board.getAllHexes().get(i).getSettlement() != null && board.getAllHexes().get(i).getSettlement().getOwnerId() == turn) {
 
                         if (movingExtraActionToUse.getExtraActionType().equals("harbor")) {
+
                             movingExtraActionToUse.setAvailableMoves(board, players[turn], board.getAllHexes().get(i));
-                            //todo: set the extraaction to used
+
+                            for(ExtraAction a : players[turn].getExtraActions()){
+                                if(a.getExtraActionType().equals("harbor") && !a.isUsed()) a.setUsed(true);
+                            }
+
                             message = "Click the highlighted hex you would like to settle";
                             gameState = 3;
-                        } else if (movingExtraActionToUse.getExtraActionType().equals("paddock")) {
+                        }
+
+                        else if (movingExtraActionToUse.getExtraActionType().equals("paddock")) {
                             //checking available moves for paddock may move into a method
                             for (int j = 0; j < 6; j++) {
                                 if(board.getAllHexes().get(i).getNeighbors().get(j) != null && board.getAllHexes().get(i).getNeighbors().get(j).getNeighbors().get(j) != null &&
                                         !board.getAllHexes().get(i).getNeighbors().get(j).getNeighbors().get(j).isSettled()){
-
+                                    boolean breaker = false;
                                     switch (board.getAllHexes().get(i).getNeighbors().get(j).getNeighbors().get(j).getType()) {
                                         case "desert", "flower", "meadow", "forest", "canyon" -> {
+
                                             movingExtraActionToUse.setAvailableMoves(board, players[turn], board.getAllHexes().get(i));
-                                            //todo: set the extraaction to used
+
+                                            for(ExtraAction a : players[turn].getExtraActions()) {
+                                                if (a.getExtraActionType().equals("paddock") && !a.isUsed())
+                                                    a.setUsed(true);
+                                            }
+
                                             message = "Click the highlighted hex you would like to settle";
                                             gameState = 3;
+                                            breaker = true;
                                         }
                                         default -> {
                                             //lol
                                         }
                                     }
-                                    break;
+                                    if(breaker) break;
                                 }
                             }
                         }

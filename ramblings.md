@@ -1,5 +1,5 @@
 # Ranting
-
+first click mandatory settlement then extraaction (tavern) causes a bug
 # Stuff to do
 - [X] Update pics (didn't update cause i think it looks better w/o)
 - [X] Finish ExtraActions 

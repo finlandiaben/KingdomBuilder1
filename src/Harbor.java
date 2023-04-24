@@ -30,6 +30,8 @@ public class Harbor implements ExtraAction{
 
     }
     public void setAvailableMoves(Board board, Player player, Hex hex){
+        player.giveSettlement(new Settlement(player.getId()));
+        hex.placeSettlement(null);
 
         boolean placeAnywhere = true;
         for(Hex h: board.getAllHexes()){
@@ -52,8 +54,6 @@ public class Harbor implements ExtraAction{
             }
         }
 
-        player.giveSettlement(new Settlement(player.getId()));
-        hex.placeSettlement(null);
         isUsed = true;
     }
 
@@ -81,6 +81,7 @@ public class Harbor implements ExtraAction{
     public boolean isUsed() {
         return isUsed;
     }
+    public void setUsed(Boolean b){isUsed = b;}
 
     public boolean doesItMove() {
         return doesItMove;

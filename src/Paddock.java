@@ -30,7 +30,6 @@ public class Paddock implements ExtraAction{
 
     }
     public void setAvailableMoves(Board board, Player player, Hex hex){
-        isUsed = true;
 
         for (int j = 0; j < 6; j++) {
             if(hex.getNeighbors().get(j) != null && hex.getNeighbors().get(j).getNeighbors().get(j) != null && !hex.getNeighbors().get(j).getNeighbors().get(j).isSettled()){
@@ -47,6 +46,7 @@ public class Paddock implements ExtraAction{
 
         player.giveSettlement(new Settlement(player.getId()));
         hex.placeSettlement(null);
+        isUsed = true;
     }
 
     public boolean canSetAvailableMoves(Board board, Player player, Hex hex){
@@ -72,6 +72,7 @@ public class Paddock implements ExtraAction{
     public boolean isUsed() {
         return isUsed;
     }
+    public void setUsed(Boolean b){isUsed = b;}
 
     public boolean doesItMove() {
         return doesItMove;

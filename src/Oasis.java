@@ -79,6 +79,7 @@ public class Oasis implements ExtraAction{
     public boolean isUsed() {
         return isUsed;
     }
+    public void setUsed(Boolean b){isUsed = b;}
 
     public boolean doesItMove() {
         return doesItMove;

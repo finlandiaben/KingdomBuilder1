@@ -10,6 +10,7 @@ public interface ExtraAction{
     void initiate();
     boolean isIniated();
     boolean isUsed();
+    void setUsed(Boolean b);
     String getExtraActionType();
     boolean doesItMove();
     void reset();

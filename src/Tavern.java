@@ -43,6 +43,7 @@ public class Tavern implements ExtraAction {
                         switch (h.getNeighbors().get(i).getNeighbors().get(i).getNeighbors().get(i).getType()) {
                             case "desert", "flower", "meadow", "forest", "canyon" -> {
                                 h.getNeighbors().get(i).getNeighbors().get(i).getNeighbors().get(i).highlight();
+
                             }
                             default -> {
                                 //lol
@@ -53,6 +54,8 @@ public class Tavern implements ExtraAction {
                 }
             }
         }
+
+        isUsed = true;
     }
 
     public boolean canSetAvailableMoves(Board board, Player player, Hex hex) {
@@ -83,6 +86,7 @@ public class Tavern implements ExtraAction {
     public boolean isUsed() {
         return isUsed;
     }
+    public void setUsed(Boolean b){isUsed = b;}
 
     public boolean doesItMove() {
         return doesItMove;
