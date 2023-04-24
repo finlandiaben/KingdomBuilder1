@@ -55,6 +55,10 @@ public class Oasis implements ExtraAction{
         isUsed = true;
     }
 
+    public boolean canSetAvailableMoves(Board board, Player player, Hex hex){
+        return true;
+    }
+
 
     public void draw(Graphics g) {
         g.drawImage(image, x, y, sizeX, sizeY, null);

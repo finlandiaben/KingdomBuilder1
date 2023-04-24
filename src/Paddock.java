@@ -33,7 +33,7 @@ public class Paddock implements ExtraAction{
         isUsed = true;
 
         for (int j = 0; j < 6; j++) {
-            if(hex.getNeighbors().get(j) != null && hex.getNeighbors().get(j).getNeighbors().get(j) != null){
+            if(hex.getNeighbors().get(j) != null && hex.getNeighbors().get(j).getNeighbors().get(j) != null && !hex.getNeighbors().get(j).getNeighbors().get(j).isSettled()){
                 switch (hex.getNeighbors().get(j).getNeighbors().get(j).getType()) {
                     case "desert", "flower", "meadow", "forest", "canyon" -> {
                         hex.getNeighbors().get(j).getNeighbors().get(j).highlight();
@@ -45,9 +45,12 @@ public class Paddock implements ExtraAction{
             }
         }
 
-        Settlement temp = hex.getSettlement();
-        player.giveSettlement(temp);
-        hex.setSettlement(null);
+        player.giveSettlement(new Settlement(player.getId()));
+        hex.placeSettlement(null);
+    }
+
+    public boolean canSetAvailableMoves(Board board, Player player, Hex hex){
+        return true;
     }
 
     public void draw(Graphics g) {

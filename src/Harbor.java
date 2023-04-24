@@ -30,9 +30,6 @@ public class Harbor implements ExtraAction{
 
     }
     public void setAvailableMoves(Board board, Player player, Hex hex){
-        Settlement temp = hex.getSettlement();
-        player.giveSettlement(temp);
-        hex.setSettlement(null);
 
         boolean placeAnywhere = true;
         for(Hex h: board.getAllHexes()){
@@ -55,7 +52,13 @@ public class Harbor implements ExtraAction{
             }
         }
 
+        player.giveSettlement(new Settlement(player.getId()));
+        hex.placeSettlement(null);
         isUsed = true;
+    }
+
+    public boolean canSetAvailableMoves(Board board, Player player, Hex hex){
+        return true;
     }
 
     public void draw(Graphics g) {

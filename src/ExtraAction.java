@@ -16,6 +16,7 @@ public interface ExtraAction{
     boolean isClicked(int mouseX, int mouseY);
     ExtraAction copy();
     void setAvailableMoves(Board b, Player p, Hex h);
+    boolean canSetAvailableMoves(Board b, Player p, Hex h);
     void setX(int x);
     void setY(int y);
 

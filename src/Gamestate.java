@@ -109,6 +109,7 @@ public class Gamestate {
 
                         if (movingExtraActionToUse.getExtraActionType().equals("harbor")) {
                             movingExtraActionToUse.setAvailableMoves(board, players[turn], board.getAllHexes().get(i));
+                            //todo: set the extraaction to used
                             message = "Click the highlighted hex you would like to settle";
                             gameState = 3;
                         } else if (movingExtraActionToUse.getExtraActionType().equals("paddock")) {
@@ -120,14 +121,15 @@ public class Gamestate {
                                     switch (board.getAllHexes().get(i).getNeighbors().get(j).getNeighbors().get(j).getType()) {
                                         case "desert", "flower", "meadow", "forest", "canyon" -> {
                                             movingExtraActionToUse.setAvailableMoves(board, players[turn], board.getAllHexes().get(i));
+                                            //todo: set the extraaction to used
                                             message = "Click the highlighted hex you would like to settle";
                                             gameState = 3;
-                                            break;
                                         }
                                         default -> {
                                             //lol
                                         }
                                     }
+                                    break;
                                 }
                             }
                         }

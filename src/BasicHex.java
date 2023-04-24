@@ -15,7 +15,12 @@ public class BasicHex extends Hex{
     public void placeSettlement(Settlement s){
         //WHAT THE FUCK IS WRONG WITH THIS LINE OF CODE
         //make sure there are no reference errors
-        this.settlement = s;
+        if(s == null){
+            this.settlement = null;
+        }else{
+            this.settlement = new Settlement(s.getOwnerId());
+        }
+
     }
 
     public Settlement getSettlement(){
