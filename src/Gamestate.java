@@ -5,8 +5,6 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-//todo: making sure impossible moves are preemptively blocked
-
 public class Gamestate {
 
     private Player[] players;
@@ -62,12 +60,8 @@ public class Gamestate {
     }
 
     public void playBasedOnState(int mouseX, int mouseY) {
-        //TODO: massive logic refactoring 
+        //TODO: making sure impossible moves are preemptively blocked
         switch (gameState) {
-            /*
-            special cases: not done
-            moving extra actions: WHY IS ISUSED NOT WORKING AAAAAAAAAAAAAAAAAA
-             */
 
             case 1 -> {
                 /*
@@ -179,7 +173,11 @@ public class Gamestate {
                             board.clearBoard();
                             isEnding = true;
                             gameState = 4;
-                        } else if (mandatorySettlementsInARow == 2) { //made it 2 because must include zero
+                        } else if(players[turn].getMandatorySettlementPhase().equals(MandatorySettlementPhase.hasBeenUsed)){
+                            board.clearBoard();
+                            gameState = 4;
+                        }
+                        else if (mandatorySettlementsInARow == 2) { //made it 2 because must include zero
                             board.clearBoard();
                             players[turn].setMandatorySettlementPhase(MandatorySettlementPhase.hasBeenUsed);
                             mandatorySettlementsInARow = 0;
