@@ -233,6 +233,13 @@ public class Board {
 
     }
 
+    public boolean canSetMandatory(Player p){
+        String target = p.getCard().getTerrainType();
+        for(Hex h : allHexes){
+            if(h.getType().equals(target)) return true;
+        } return false;
+    }
+
     public void clearBoard(){
         for(int i = 0; i < allHexes.size(); i++){
             allHexes.get(i).unHighlight();
@@ -251,5 +258,19 @@ public class Board {
             }
         }
     }
+
+    public void castleScore(Player p){
+        for(Hex h : allHexes){
+            if(h.getType().equals("castle")){
+                for(int i = 0; i < h.getNeighbors().size(); i++){
+                    if(h.getNeighbors().get(i) != null && h.getNeighbors().get(i).getSettlement() != null && h.getNeighbors().get(i).getSettlement().getOwnerId() == p.getId()){
+                        p.setScore(p.getScore() + 3);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
 }
 

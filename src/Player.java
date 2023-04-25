@@ -180,6 +180,12 @@ public class Player {
             if(!a.isUsed() && a.isIniated()) return false;
         } return true;
     }
+
+    public boolean canUseExtraActions(Board b, Player p, Hex h){
+        for(ExtraAction a : extraActions){
+            if(!a.isUsed() && a.canSetAvailableMoves(b, p, h)) return true;
+        } return false;
+    }
     
     public void resetExtraActions(){
         for(int i = 0; i < extraActions.size(); i++){

@@ -58,7 +58,11 @@ public class Harbor implements ExtraAction{
     }
 
     public boolean canSetAvailableMoves(Board board, Player player, Hex hex){
-        return true;
+        for(Hex h : board.getAllHexes()){
+            if(h.getSettlement() == null && h.getType().equals("water")){
+                return true;
+            }
+        } return false;
     }
 
     public void draw(Graphics g) {

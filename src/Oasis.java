@@ -56,7 +56,11 @@ public class Oasis implements ExtraAction{
     }
 
     public boolean canSetAvailableMoves(Board board, Player player, Hex hex){
-        return true;
+        for(Hex h : board.getAllHexes()){
+            if(h.getSettlement() == null && h.getType().equals("desert")){
+                return true;
+            }
+        } return false;
     }
 
 

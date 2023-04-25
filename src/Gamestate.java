@@ -16,7 +16,8 @@ public class Gamestate {
     private int gameState;
     private String message;
     private boolean isEnding;
-    private boolean toScore;
+    private boolean drawScoring;
+    private boolean drawLeaderBoard;
     private int mandatorySettlementsInARow;
     private ExtraAction movingExtraActionToUse;
     //drawing variables
@@ -52,7 +53,8 @@ public class Gamestate {
         startingPlayer = (int) (Math.random() * 4);
         turn = startingPlayer;
         isEnding = false;
-        toScore = false;
+        drawScoring = false;
+        drawLeaderBoard = false;
         drawYesOrNo = false;
         gameState = 1;
         //set message before each state occurs
@@ -68,31 +70,37 @@ public class Gamestate {
                 -detect what was clicked and see if it can be used
                 -should be finished
                 */
-
-                if (players[turn].extraActionClicked(mouseX, mouseY) != null && players[turn].extraActionClicked(mouseX, mouseY).doesItMove() &&
-                        !players[turn].extraActionClicked(mouseX, mouseY).isUsed() && players[turn].extraActionClicked(mouseX, mouseY).isIniated()) {
-                    //todo
-                    movingExtraActionToUse = players[turn].extraActionClicked(mouseX, mouseY).copy();
-                    gameState = 2;
-                    message = "Click which settlement you would like to move";
+                if(!board.canSetMandatory(players[turn]))
+                {
+                    TerrainCard temp = players[turn].getCard();
+                    deck.discardCard(temp);
+                    players[turn].setCard(deck.drawCard());
                 }
-                else if (players[turn].extraActionClicked(mouseX, mouseY) != null && !players[turn].extraActionClicked(mouseX, mouseY).doesItMove() &&
-                        !players[turn].extraActionClicked(mouseX, mouseY).isUsed() && players[turn].extraActionClicked(mouseX, mouseY).isIniated()) {
+                else {
 
-                    //this works i think
-                    players[turn].extraActionClicked(mouseX, mouseY).setAvailableMoves(board, players[turn], null);
-                    message = "Click the highlighted hex you would like to settle";
-                    gameState = 3;
-                }
-                else if (players[turn].mandatorySettlementsClicked(mouseX, mouseY) &&
-                        players[turn].getMandatorySettlementPhase().equals(MandatorySettlementPhase.hasNotUsed)) {
-                    //this works for sure
-                    players[turn].setMandatorySettlementPhase(MandatorySettlementPhase.isUsing);
-                    board.setMandatorySettlementHexes(players[turn]);
-                    message = "Click the highlighted hex you would like to settle";
-                    gameState = 3;
-                }
+                    if (players[turn].extraActionClicked(mouseX, mouseY) != null && players[turn].extraActionClicked(mouseX, mouseY).doesItMove() &&
+                            !players[turn].extraActionClicked(mouseX, mouseY).isUsed() && players[turn].extraActionClicked(mouseX, mouseY).isIniated() &&
+                            players[turn].extraActionClicked(mouseX, mouseY).canSetAvailableMoves(board, players[turn], null)) {
 
+                        movingExtraActionToUse = players[turn].extraActionClicked(mouseX, mouseY).copy();
+                        gameState = 2;
+                        message = "Click which settlement you would like to move";
+                    } else if (players[turn].extraActionClicked(mouseX, mouseY) != null && !players[turn].extraActionClicked(mouseX, mouseY).doesItMove() &&
+                            !players[turn].extraActionClicked(mouseX, mouseY).isUsed() && players[turn].extraActionClicked(mouseX, mouseY).isIniated() &&
+                            players[turn].extraActionClicked(mouseX, mouseY).canSetAvailableMoves(board, players[turn], null)) {
+
+                        //this works i think
+                        players[turn].extraActionClicked(mouseX, mouseY).setAvailableMoves(board, players[turn], null);
+                        message = "Click the highlighted hex you would like to settle";
+                        gameState = 3;
+                    } else if (players[turn].mandatorySettlementsClicked(mouseX, mouseY) && players[turn].getMandatorySettlementPhase().equals(MandatorySettlementPhase.hasNotUsed)) {
+
+                        players[turn].setMandatorySettlementPhase(MandatorySettlementPhase.isUsing);
+                        board.setMandatorySettlementHexes(players[turn]);
+                        message = "Click the highlighted hex you would like to settle";
+                        gameState = 3;
+                    }
+                }
             }
 
             case 2 -> {
@@ -204,6 +212,8 @@ public class Gamestate {
                  */
                 if (isEnding && (turn + 1) % 4 == startingPlayer) {
                     message = "Click anywhere to score the next objective card";
+                    drawScoring = true;
+                    turn = startingPlayer;
                     gameState = 6;
                 } else if (isEnding && players[turn].getSettlementsRemaining() == 0) {
                     turn = (turn + 1) % 4;
@@ -212,7 +222,7 @@ public class Gamestate {
                     mandatorySettlementsInARow = 0;
                     gameState = 1;
                 } else if (players[turn].getMandatorySettlementPhase().equals(MandatorySettlementPhase.hasBeenUsed) &&
-                        players[turn].areAllExtraActionUsed()) {
+                        players[turn].areAllExtraActionUsed() || !players[turn].canUseExtraActions(board, players[turn], null)) {
                     //this temp is to avoid pesky reference errors
                     TerrainCard temp = players[turn].getCard();
                     deck.discardCard(temp);
@@ -250,15 +260,58 @@ public class Gamestate {
                 } else if(noClicked(mouseX, mouseY)){
                     drawYesOrNo = false;
                     board.clearBoard();
+                    message = "Click on either an extra-action or the mandatory settlements";
                     gameState = 1;
+                }
+            }
+
+            case 6 ->{
+                scoreCards.minerScore(board, players[turn]);
+                turn = (turn + 1) % 4;
+                if(turn == startingPlayer){
+                    message = "Click anywhere to score the next objective card";
+                    gameState = 7;
+                }
+            }
+
+            case 7 ->{
+                scoreCards.merchantScore(board, players[turn]);
+                turn = (turn + 1) % 4;
+                if(turn == startingPlayer){
+                    message = "Click anywhere to score the next objective card";
+                    gameState = 8;
+                }
+            }
+
+            case 8 ->{
+                scoreCards.knightScore(board, players[turn]);
+                turn = (turn + 1) % 4;
+
+                if(turn == startingPlayer){
+                    message = "Click anywhere to score based on castles";
+                    gameState = 9;
+                }
+            }
+
+            case 9->{
+                board.castleScore(players[turn]);
+                turn = (turn + 1) % 4;
+                if(turn == startingPlayer){
+                    message = "Congratulations!";
+                    drawLeaderBoard = true;
                 }
             }
         }
     }
 
     public void draw(Graphics g) {
-        if (toScore) {
-            //TODO: draw scoring here
+        if(drawLeaderBoard){
+
+        }
+        else if (drawScoring) {
+            board.drawBoard(g);
+            scoreCards.draw(g);
+            //maybe make a draw score method in the player where ther is just the color and the player name, under it is player score
         } else {
             if (drawYesOrNo) {
                 g.setColor(new Color(245, 229, 193));
@@ -266,7 +319,7 @@ public class Gamestate {
                 g.fillRoundRect(yesOrNoButtonX + yesOrNoButtonSize + yesOrNoButtonSpacingX, yesOrNoButtonY, yesOrNoButtonSize, yesOrNoButtonSize, 30, 30);
                 g.setColor(Color.BLACK);
                 g.setFont(new Font("SansSerif", Font.PLAIN, 20));
-                //todo: fix this
+
                 g.drawString("yes", yesOrNoButtonX + 10, yesOrNoButtonY + 30);
                 g.drawString("no",  yesOrNoButtonX + yesOrNoButtonSpacingX + yesOrNoButtonSize + 16 , yesOrNoButtonY + 30);
             }

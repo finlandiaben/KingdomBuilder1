@@ -49,8 +49,24 @@ public class Paddock implements ExtraAction{
         isUsed = true;
     }
 
-    public boolean canSetAvailableMoves(Board board, Player player, Hex hex){
-        return true;
+    public boolean canSetAvailableMoves(Board board, Player player, Hex hex) {
+        for (Hex h : board.getAllHexes()) {
+            if (h.getSettlement() != null && h.getSettlement().getOwnerId() == player.getId()) {
+                for (int i = 0; i < 6; i++) {
+                    if (h.getNeighbors().get(i) != null && h.getNeighbors().get(i).getNeighbors().get(i) != null &&
+                            h.getNeighbors().get(i).getNeighbors().get(i).getSettlement() == null) {
+                        switch (h.getNeighbors().get(i).getNeighbors().get(i).getType()) {
+                            case "desert", "flower", "meadow", "forest", "canyon" -> {
+                                return true;
+                            }
+                            default -> {
+                                //lol
+                            }
+                        }
+                    }
+                }
+            }
+        } return false;
     }
 
     public void draw(Graphics g) {

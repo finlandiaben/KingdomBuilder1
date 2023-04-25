@@ -45,68 +45,9 @@ public class ScoreCard {
     }
     
     public int merchantScore(Board board, Player player) {
-        int score = 0;
-        ArrayList<Hex> allHexes = board.getAllHexes();
-        ArrayList<Hex> playerHexies = new ArrayList<Hex>();
-        ArrayList<Hex> urSoHexy = new ArrayList<Hex>();
-
-        for(Hex x : allHexes) //part 1 - Getting an arraylist of locations that have a neighboring settlement owned by the player (to save on run time).
-        {
-            if(x.getSettlement().getOwnerId()== player.getId())
-                playerHexies.add(x);
-        }
-        for(Hex h : playerHexies)
-        {
-            ArrayList<Hex> tempNeighbors = h.getNeighbors();
-            for(Hex z : tempNeighbors)
-            {
-                String type = z.getType();
-                if(type.equals("city") || type.equals("oasis") || type.equals("paddock") || type.equals("tavern") || type.equals("harbor"))
-                    urSoHexy.add(z);
-            }
-        }
-
-        if(urSoHexy.size() < 2)
-            return 0;
-        
-        boolean connected = false; //part 2 - Checking if each location is connected to another location, and adding 4 to score if it is.
-
-        for(Hex hix : urSoHexy)
-        {
-            if(connected)
-            {
-                score+=4;
-                connected = false;
-            }
-            for(Hex hox : urSoHexy)
-                if(!connected)
-                    if(!hox.equals(hix))
-                    {
-                        visited.clear();
-                        connected = isConnected(board, player, hix, urSoHexy);
-                    }
-        }
-        return score;
+        return 0;
     }
-    private ArrayList<Hex> visited = new ArrayList<Hex>();
 
-    public boolean isConnected(Board b, Player p, Hex location1, ArrayList<Hex> otherSettlements) //extention to merchantScore to get recursion working
-    {
-        ArrayList<Hex> neighbors = location1.getNeighbors();
-
-        visited.add(location1);
-        for(Hex neighbor : neighbors)
-        {
-            if(!visited.contains(neighbor)) {
-                if(otherSettlements.contains(neighbor))
-                    return true;
-                if(neighbor.getSettlement().getOwnerId()== p.getId())
-                    if(isConnected(b, p, neighbor, otherSettlements))
-                        return true;
-            }
-        }
-        return false;
-    }
     
     public int knightScore(Board board, Player player) {
         int score = 0; 
@@ -114,7 +55,7 @@ public class ScoreCard {
         for(int x = 0; x < 20; x++)
         {
             int tempScore = 0;
-            for(int y = 0; x < 20; y++)
+            for(int y = 0; y < 20; y++)
             {
                 if(allHexes.get((x*20)+y).getSettlement().getOwnerId() == player.getId())
                     tempScore+=2;
