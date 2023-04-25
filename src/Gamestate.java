@@ -259,6 +259,26 @@ public class Gamestate {
     public void draw(Graphics g) {
         if (toScore) {
             //TODO: draw scoring here
+             g.clearRect(0, 0, 1200, 800);
+            //so that the original array doesn't get messed up
+            Player[] players2 = new Player[4];
+            for(Player p :players){
+
+            }
+            //find out actual placement values later
+            int x = 0;
+            int y = 0;
+            g.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
+            g.setColor(Color.BLACK);
+            int a = players2[3].getId() + 1;
+            int b = players2[2].getId() + 1;
+            int c = players2[1].getId() + 1;
+            int d = players2[0].getId() + 1;
+
+            g.drawString("Player " + a + ": " + players2[3].getScore() + " gold", x, y);
+            g.drawString("Player " + b + ": " + players2[2].getScore() + " gold", x, y + 30);
+            g.drawString("Player " + c + ": " + players2[1].getScore() + " gold", x, y + 60);
+            g.drawString("Player " + d  + ": " + players2[0].getScore() + " gold", x, y + 90);
         } else {
             if (drawYesOrNo) {
                 g.setColor(new Color(245, 229, 193));
