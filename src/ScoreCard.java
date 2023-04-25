@@ -15,59 +15,57 @@ public class ScoreCard {
     private BufferedImage merchantsFace;
     private BufferedImage knightsFace;
     private static final int cardSpacingX = 30;
-    
-    public ScoreCard()
-    {
+
+    public ScoreCard() {
         try {
             minersFace = ImageIO.read(Deck.class.getResource("/Images/KB-miners.png"));
             knightsFace = ImageIO.read(Deck.class.getResource("/Images/KB-knights.png"));
             merchantsFace = ImageIO.read(Deck.class.getResource("/Images/KB-merchants.png"));
-        }catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public int minerScore(Board board, Player player) {
+    public void minerScore(Board board, Player player) {
         int score = 0;
-        ArrayList<Hex> allHexes = board.getAllHexes();
-        for(Hex x : allHexes)
-        {
-            if(x.getSettlement().getOwnerId() == player.getId())
-            {
-                ArrayList<Hex> neighborHexes = x.getNeighbors();
-                for(Hex i : neighborHexes)
-                    if(i.getType().equals("mountain"))
+        for (Hex hex : board.getAllHexes()) {
+            if (hex.getSettlement() != null && hex.getSettlement().getOwnerId() == player.getId()) {
+                for (Hex h : hex.getNeighbors())
+                    if (h != null && h.getType().equals("mountain")) {
                         score += 1;
-                        //need to break here because it doesn't matter how many u are touching
+                        break;
+                    }
             }
-        }
-        return score;
+        } player.setScore(player.getScore() + score);
+
     }
-    
+
     public int merchantScore(Board board, Player player) {
         return 0;
     }
 
-    
-    public int knightScore(Board board, Player player) {
-        int score = 0; 
-        ArrayList<Hex> allHexes = board.getAllHexes();
-        for(int x = 0; x < 20; x++)
-        {
-            int tempScore = 0;
-            for(int y = 0; y < 20; y++)
-            {
-                if(allHexes.get((x*20)+y).getSettlement().getOwnerId() == player.getId())
-                    tempScore+=2;
+
+    public void knightScore(Board board, Player player) {
+        int score = 0;
+        int tempScore = 0;
+        for(int i = 0; i < 20; i++){
+            for(Hex h : board.getRow(i)){
+                if(h.getSettlement() != null && h.getSettlement().getOwnerId() == player.getId()){
+                    tempScore += 2;
+                }
             }
-            score = Math.max(tempScore, score);
+
+            if(tempScore >= score){
+                score = tempScore;
+            }
         }
-        return score;
+
+        player.setScore(player.getScore() + score);
     }
 
     public void draw(Graphics g) {
         g.drawImage(minersFace, x, y, SIZEX, SIZEY, null);
-        g.drawImage(merchantsFace, x + + SIZEX + cardSpacingX, y, SIZEX, SIZEY, null);
+        g.drawImage(merchantsFace, x + +SIZEX + cardSpacingX, y, SIZEX, SIZEY, null);
         g.drawImage(knightsFace, x + (2 * SIZEX) + (2 * cardSpacingX), y, SIZEX, SIZEY, null);
     }
 }

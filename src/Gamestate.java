@@ -29,6 +29,13 @@ public class Gamestate {
     private static final int messageX = 826;
     private static final int messageY = 625;
 
+    public static final int drawScoreX = 925;
+    public static final int drawScoreY = 400;
+    public static final int drawScoreBackgroundSpacingX = 25;
+    public static final int drawScoreBackgroundSpacingY = 43;
+    public static final int drawScoreBackgroundSize = 150;
+    public static final int drawScoreSpacingY = 30;
+
 
     public Gamestate() {
         players = new Player[4];
@@ -59,6 +66,8 @@ public class Gamestate {
         gameState = 1;
         //set message before each state occurs
         message = "Click on either an extra-action or the mandatory settlements";
+
+        drawLeaderBoard = false;
     }
 
     public void playBasedOnState(int mouseX, int mouseY) {
@@ -306,13 +315,41 @@ public class Gamestate {
 
     public void draw(Graphics g) {
         if(drawLeaderBoard){
+            board.drawBoard(g);
+            scoreCards.draw(g);
 
         }
         else if (drawScoring) {
             board.drawBoard(g);
             scoreCards.draw(g);
-            //maybe make a draw score method in the player where ther is just the color and the player name, under it is player score
-        } else {
+            g.setFont(new Font("SansSerif", Font.PLAIN, 12));
+            g.setColor(new Color(245, 229, 193));
+            g.fillRoundRect(drawScoreX - drawScoreBackgroundSpacingX, drawScoreY - drawScoreBackgroundSpacingY,drawScoreBackgroundSize , drawScoreBackgroundSize, 30, 30);
+            g.drawString(message, messageX, messageY);
+
+            g.setFont(new Font("SansSerif", Font.PLAIN, 20));
+            for(int i = 0; i < 4; i++){
+                switch (i){
+                    case 0 ->{
+                        g.setColor(new Color(242, 122, 10));
+                    }
+                    case 1 ->{
+                        g.setColor(new Color(200, 66, 245));
+                    }
+                    case 2 ->{
+                        g.setColor(Color.black);
+                    }
+                    case 3 ->{
+                        g.setColor(Color.gray);
+                    }
+                }
+                int t = i + 1;
+                g.drawString("Player " + t + ": " + players[turn].getScore(), drawScoreX, drawScoreY + drawScoreSpacingY * i);
+            }
+
+        }
+
+        else {
             if (drawYesOrNo) {
                 g.setColor(new Color(245, 229, 193));
                 g.fillRoundRect(yesOrNoButtonX, yesOrNoButtonY, yesOrNoButtonSize, yesOrNoButtonSize, 30, 30);
