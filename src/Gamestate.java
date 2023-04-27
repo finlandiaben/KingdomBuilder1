@@ -56,7 +56,7 @@ public class Gamestate {
         drawYesOrNo = false;
         gameState = 1;
         //set message before each state occurs
-        message = "Click on either an extra-action or the mandatory settlements";
+        message = "Click on either an extra-action token or the settlement icon";
     }
 
     public void playBasedOnState(int mouseX, int mouseY) {
