@@ -88,9 +88,11 @@ public class Hex {
     }
 
     public void draw(Graphics g){
-        if(isHighlighted){
+        /*if(isHighlighted){
             g.setColor(Color.RED);
-            g.drawPolygon(pointsX, pointsY, 6);
+            g.drawPolygon(pointsX, pointsY, 6);*/
+            g.setColor(new Color(17, 250, 48, 125));
+            g.fillPolygon(pointsX, pointsY, 6);
         }
     }
 
