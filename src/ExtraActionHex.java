@@ -45,6 +45,9 @@ public class ExtraActionHex extends Hex {
         for(int i = 0; i < extraActions.size(); i++){
             extraActions.get(i).draw(g);
         }
+        g.setColor(Color.red);
+        g.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        g.drawString(extraActions.size() + "", getPointsX()[0] + 5, getPointsY()[0] + 12);
     }
     public boolean isDepleted() {
         return extraActions.size() == 0;
@@ -66,17 +69,10 @@ public class ExtraActionHex extends Hex {
     }
 
     public boolean hasMovedAway(Player player) {
-        //massive issue here
-        if(hasGivenToPlayer(player)){
-            for(Hex h : super.getNeighbors()){
-                if(h.getSettlement() != null && h.getSettlement().getOwnerId() == player.getId()){
-                    return false;
-                }
-            }
+        for(Hex h : super.getNeighbors()){
+            if(h.getSettlement() != null && h.getSettlement().getOwnerId() == player.getId()) return false;
         }
-
-        //true = has moved away. false from this statement means s/he has never been there
-        return !adjacentPlayers[player.getId()];
+        return hasGivenToPlayer(player);
     }
 
     public String getType(){

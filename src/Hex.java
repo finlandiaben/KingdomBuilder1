@@ -4,8 +4,8 @@ import javax.swing.*;
 
 public class Hex {
 
-    private static final int settlementSpacingX = 4;
-    private static final int settlementSpacingY = 1;
+    private static final int settlementSpacingX = 0;
+    private static final int settlementSpacingY = -5;
 
     /*
     index 0 of these arrays will be the top left corner of the hexagon
@@ -89,8 +89,10 @@ public class Hex {
 
     public void draw(Graphics g){
         if(isHighlighted){
-            g.setColor(Color.RED);
-            g.drawPolygon(pointsX, pointsY, 6);
+//            g.setColor(Color.RED);
+//            g.drawPolygon(pointsX, pointsY, 6);
+            g.setColor(new Color(255, 255, 255, 70));
+            g.fillPolygon(pointsX, pointsY, 6);
         }
     }
 
@@ -121,7 +123,7 @@ public class Hex {
     
     public void giveExtraAction(Player player) {}
     
-    public boolean hasGivenToPlayer(Player player) {return true;}
+    public boolean hasGivenToPlayer(Player player) {return false;}
     
     public boolean hasMovedAway(Player player) {return false;}
 

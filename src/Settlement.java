@@ -9,8 +9,8 @@ public class Settlement {
 
     private int owner;
     private BufferedImage image;
-    private static final int imageSizeX = 20;
-    private static final int imageSizeY = 20;
+    private static final int imageSizeX = 30;
+    private static final int imageSizeY = 30;
 
     public Settlement(int o){
         try{

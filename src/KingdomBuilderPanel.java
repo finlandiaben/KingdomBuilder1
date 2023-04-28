@@ -11,6 +11,9 @@ public class KingdomBuilderPanel extends JPanel implements MouseListener{
 
     private Gamestate gameState;
     private BufferedImage background;
+    public static final int logoSizeX = 300;
+    public static final int logoSizeY = 200;
+    private BufferedImage logo;
     private int objectiveCardSpacing;
 
     //testing variables
@@ -40,22 +43,9 @@ public class KingdomBuilderPanel extends JPanel implements MouseListener{
         }
     }
 
-    public void drawObjectiveCards(Graphics g) {
-
-    }
-
-    public void drawScoring(Graphics g) {
-
-    }
-
-    public void drawDeck(Graphics g) {
-
-    }
-
     public void mouseClicked(MouseEvent e) {
         gameState.playBasedOnState(e.getX(), e.getY());
         repaint();
-
     }
 
     public void mousePressed(MouseEvent e) {}

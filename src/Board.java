@@ -247,11 +247,11 @@ public class Board {
     }
 
     public void removeIfMovedAway(Player p){
-
-        for(Hex h : allHexes){
-            if(h.hasGivenToPlayer(p) && h.hasMovedAway(p)){
-                for(int i = p.getExtraActions().size() - 1; i >= 0 ; i--){
-                    if(p.getExtraActions().get(i).getExtraActionType().equals(h.getType())){ //i think this line is a problem?
+        for(Hex hex : allHexes){
+            if(hex.hasMovedAway(p)){
+                for(int i = p.getExtraActions().size() - 1; i >= 0; i--){
+                    if(p.getExtraActions().get(i).getExtraActionType().equals(hex.getType())){
+                        System.out.println("yay");
                         p.getExtraActions().remove(i);
                     }
                 }
@@ -259,9 +259,9 @@ public class Board {
         }
     }
 
-    public void castleScore(Player p){
+    public void cityScore(Player p){
         for(Hex h : allHexes){
-            if(h.getType().equals("castle")){
+            if(h.getType().equals("city")){
                 for(int i = 0; i < h.getNeighbors().size(); i++){
                     if(h.getNeighbors().get(i) != null && h.getNeighbors().get(i).getSettlement() != null && h.getNeighbors().get(i).getSettlement().getOwnerId() == p.getId()){
                         p.setScore(p.getScore() + 3);

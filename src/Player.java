@@ -9,6 +9,10 @@ import javax.imageio.ImageIO;
 
 public class Player {
 
+    private BufferedImage startChip;
+    public static final int chipSpacingX = 100;
+    public static final int chipSpacingY = 140;
+    public boolean drawChip;
     private static final int boxX = 825;
     private static final int boxY = 400;
     private static final int boxSizeX = 300;
@@ -37,7 +41,7 @@ public class Player {
     private static final int cardMarginX = 1025 - boxX;
     private static final int cardMarginY = 415 - boxY;
     private Color settlementButtonColor;
-    private final int id;
+    private int id;
     private ArrayList<Settlement> settlements;
     private ArrayList<ExtraAction> extraActions;
     private TerrainCard card;
@@ -45,25 +49,32 @@ public class Player {
     private MandatorySettlementPhase mandatorySettlementPhase;
 
     public Player(int id){
-        this.id = id;
-        settlements = new ArrayList<>();
-        
-        for(int i = 0; i < 40; i++){
-            settlements.add(new Settlement(this.id));
-        }
-        
-        extraActions = new ArrayList<>();
-        int score = 0;
-        mandatorySettlementPhase = MandatorySettlementPhase.hasNotUsed;
+        try {
+            drawChip = false;
+            startChip = ImageIO.read(Player.class.getResource("/Images/KB-startChip.png"));
+            this.id = id;
+            settlements = new ArrayList<>();
 
-        if (id == 0) {
-            settlementButtonColor = new Color(242, 122, 10);
-        } else if (id == 1) {
-            settlementButtonColor = new Color(200, 66, 245);
-        } else if (id == 2) {
-            settlementButtonColor = Color.black;
-        } else if (id == 3) {
-            settlementButtonColor = Color.gray;
+            //testing
+            for (int i = 0; i < 40; i++) {
+                settlements.add(new Settlement(this.id));
+            }
+
+            extraActions = new ArrayList<>();
+            score = 0;
+            mandatorySettlementPhase = MandatorySettlementPhase.hasNotUsed;
+
+            if (id == 0) {
+                settlementButtonColor = new Color(242, 122, 10);
+            } else if (id == 1) {
+                settlementButtonColor = new Color(200, 66, 245);
+            } else if (id == 2) {
+                settlementButtonColor = Color.black;
+            } else if (id == 3) {
+                settlementButtonColor = Color.gray;
+            }
+        } catch(Exception e){
+
         }
     }
 
@@ -107,11 +118,9 @@ public class Player {
         g.fillRoundRect(boxX, boxY, boxSizeX, boxSizeY, 50, 30);
        //draw player name
         g.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 30));
-        g.setColor(Color.BLACK);
+        g.setColor(settlementButtonColor);
         int t = getId() + 1;
         g.drawString("Player " + t, boxX + playerNameMarginX, boxY + playerNameMarginY);
-        //drawing settlement button
-        g.setColor(settlementButtonColor);
         g.fillPolygon(mandatorySettlementButtonPointsX, mandatorySettlementButtonPointsY, 5);
         //draw amount of settlements left
         if(id >= 2) {
@@ -119,6 +128,7 @@ public class Player {
         }else {
             g.setColor(Color.BLACK);
         }
+
         g.setFont(new Font("SansSerif", Font.PLAIN, 20));
         g.drawString(" " + getSettlementsRemaining(), mandatorySettlementButtonPointsX[0] + 9, mandatorySettlementButtonPointsY[0] + 25);
         //draw card
@@ -130,6 +140,10 @@ public class Player {
                 extraActions.get(i).setY(boxY + extraActionRelativeY + (i / 4) * extraActionSpacingY);
                 extraActions.get(i).draw(g, boxX + extraActionRelativeX + (i % 4) * extraActionSpacingX, boxY + extraActionRelativeY + (i / 4) * extraActionSpacingY);
             }
+        }
+
+        if(drawChip){
+            g.drawImage(startChip, boxX + chipSpacingX, boxY + chipSpacingY, 50, 50, null);
         }
 
     }
@@ -207,5 +221,8 @@ public class Player {
     }
     public void giveSettlement(Settlement temp) {
         settlements.add(temp);
+    }
+    public void setStart(Boolean b){
+        drawChip = b;
     }
 }

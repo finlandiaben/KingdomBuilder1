@@ -7,10 +7,10 @@ import javax.imageio.ImageIO;
 
 
 public class ScoreCard {
-    private static final int SIZEX = 90;
-    private static final int SIZEY = 150;
-    private static final int x = 130;
-    private static final int y = 5;
+    private static final int SIZEX = 70;
+    private static final int SIZEY = 90;
+    private static final int x = 315 - 100 - 12;
+    private static final int y = 60;
     private BufferedImage minersFace;
     private BufferedImage merchantsFace;
     private BufferedImage knightsFace;
@@ -36,13 +36,17 @@ public class ScoreCard {
                         break;
                     }
             }
-        } player.setScore(player.getScore() + score);
-
+        }
+        player.setScore(player.getScore() + score);
+        System.out.println(player.getScore());
     }
 
     public int merchantScore(Board board, Player player) {
+
         return 0;
     }
+
+    
 
 
     public void knightScore(Board board, Player player) {
@@ -50,7 +54,7 @@ public class ScoreCard {
         int tempScore = 0;
         for(int i = 0; i < 20; i++){
             for(Hex h : board.getRow(i)){
-                if(h.getSettlement() != null && h.getSettlement().getOwnerId() == player.getId()){
+                if(h!= null && h.getSettlement() != null && h.getSettlement().getOwnerId() == player.getId()){
                     tempScore += 2;
                 }
             }
