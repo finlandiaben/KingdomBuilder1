@@ -93,7 +93,7 @@ public class Gamestate {
         //TODO: making sure impossible moves are preemptively blocked
         switch (gameState) {
             case -1 -> {
-                message = "Click on either an extra-action or the mandatory settlements";
+                message = "Click on either an extra-action or the settlement icon";
                 gameState = 1;
                 drawStart = false;
             }
@@ -229,7 +229,7 @@ public class Gamestate {
                             gameState = 3;
                         } else if (players[turn].getMandatorySettlementPhase().equals(MandatorySettlementPhase.hasNotUsed)) {
                             board.clearBoard();
-                            message = "Click on either an extra-action or the mandatory settlements";
+                            message = "Click on either an extra-action or the settlement icon";
                             gameState = 1;
                         }
                         break;
@@ -255,7 +255,7 @@ public class Gamestate {
                     deck.discardCard(temp);
                     players[turn].setCard(deck.drawCard());
                     turn = (turn + 1) % 4;
-                    message = "Click on either an extra-action or the mandatory settlements";
+                    message = "Click on either an extra-action or the settlement icon";
                     //don't have to reset extraactions
                     mandatorySettlementsInARow = 0;
                     gameState = 1;
@@ -267,7 +267,7 @@ public class Gamestate {
                     players[turn].setCard(deck.drawCard());
                     players[turn].resetExtraActions();
                     board.removeIfMovedAway(players[turn]);
-                    message = "Click on either an extra-action or the mandatory settlements";
+                    message = "Click on either an extra-action or the settlement icon";
                     players[turn].setMandatorySettlementPhase(MandatorySettlementPhase.hasNotUsed);
                     mandatorySettlementsInARow = 0;
                     turn = (turn + 1) % 4;
@@ -288,7 +288,7 @@ public class Gamestate {
                         players[turn].setCard(deck.drawCard());
                         players[turn].resetExtraActions();
                         board.removeIfMovedAway(players[turn]);
-                        message = "Click on either an extra-action or the mandatory settlements";
+                        message = "Click on either an extra-action or the settlement icon";
                         players[turn].setMandatorySettlementPhase(MandatorySettlementPhase.hasNotUsed);
                         turn = (turn + 1) % 4;
                         mandatorySettlementsInARow = 0;
@@ -298,7 +298,7 @@ public class Gamestate {
                 } else if (noClicked(mouseX, mouseY)) {
                     drawYesOrNo = false;
                     board.clearBoard();
-                    message = "Click on either an extra-action or the mandatory settlements";
+                    message = "Click on either an extra-action or the settlement icon";
                     gameState = 1;
                 }
             }
