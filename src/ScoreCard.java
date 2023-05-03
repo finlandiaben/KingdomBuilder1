@@ -20,7 +20,7 @@ public class ScoreCard {
         try {
             minersFace = ImageIO.read(Deck.class.getResource("/Images/KB-miners.png"));
             knightsFace = ImageIO.read(Deck.class.getResource("/Images/KB-knights.png"));
-            merchantsFace = ImageIO.read(Deck.class.getResource("/Images/KB-merchants.png"));
+            merchantsFace = ImageIO.read(Deck.class.getResource("/Images/KB-farmers.png"));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -41,8 +41,71 @@ public class ScoreCard {
         System.out.println(player.getScore());
     }
 
-    public void merchantScore(Board board) {
+    public void farmerScore(Board board, Player player) {
+        int score = Integer.MAX_VALUE;
+        for(int i = 0; i < 4; i++){
+            if(score > scoreQuadrant(board, i, player)) score = scoreQuadrant(board, i, player);
+        }
+        player.setScore(score);
     }
+
+    private int scoreQuadrant(Board board, int quadrant, Player player){
+        int score = 0;
+        switch(quadrant){
+            case 1 ->{
+                for(int i = 0; i < 10; i++){
+                    for(int j = 20; j < 40; j += 2){
+                        if(i % 2 == 1 && j == 20) j += 1;
+
+                        if(board.getRow(i)[j].getSettlement() != null && board.getRow(i)[j].getSettlement().getOwnerId() == player.getId()){
+                            score += 3;
+                        }
+                    }
+                }
+            }
+
+            case 2 ->{
+                for(int i = 0; i < 10; i++){
+                    for(int j = 0; j < 20; j += 2){
+                        if(i % 2 == 1 && j == 0) j += 1;
+
+                        if(board.getRow(i)[j].getSettlement() != null && board.getRow(i)[j].getSettlement().getOwnerId() == player.getId()){
+                            score += 3;
+                        }
+                    }
+                }
+            }
+
+            case 3 ->{
+                for(int i = 10; i < 20; i++){
+                    for(int j = 0; j < 20; j += 2){
+                        if(i % 2 == 1 && j == 0) j += 1;
+
+                        if(board.getRow(i)[j].getSettlement() != null && board.getRow(i)[j].getSettlement().getOwnerId() == player.getId()){
+                            score += 3;
+                        }
+                    }
+                }
+            }
+
+            case 4 ->{
+                for(int i = 10; i < 20; i++){
+                    for(int j = 20; j < 40; j += 2){
+                        if(i % 2 == 1 && j == 20) j += 1;
+
+                        if(board.getRow(i)[j].getSettlement() != null && board.getRow(i)[j].getSettlement().getOwnerId() == player.getId()){
+                            score += 3;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return score;
+    }
+
+
 
 
 

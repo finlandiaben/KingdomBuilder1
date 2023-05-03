@@ -304,8 +304,10 @@ public class Gamestate {
             }
 
             case 6 -> {
-                scoreCards.merchantScore(board);
-                message = "Merchants scored! Click anywhere to score Knights!";
+                for(int i = 0; i < 3; i++){
+                    scoreCards.farmerScore(board, players[i]);
+                }
+                message = "Farmers scored! Click anywhere to score Knights!";
                 gameState = 7;
             }
 
