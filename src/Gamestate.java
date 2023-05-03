@@ -304,10 +304,7 @@ public class Gamestate {
             }
 
             case 6 -> {
-                for(int i = 0; i  < 4; i++){
-                    scoreCards.merchantScore(board, players[i]);
-                }
-
+                scoreCards.merchantScore(board);
                 message = "Merchants scored! Click anywhere to score Knights!";
                 gameState = 7;
             }

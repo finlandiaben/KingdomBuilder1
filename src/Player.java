@@ -54,13 +54,15 @@ public class Player {
             startChip = ImageIO.read(Player.class.getResource("/Images/KB-startChip.png"));
             this.id = id;
             settlements = new ArrayList<>();
+            extraActions = new ArrayList<>();
 
             //testing
-            for (int i = 0; i < 40; i++) {
+            for (int i = 0; i < 3; i++) {
                 settlements.add(new Settlement(this.id));
             }
+            extraActions.add(new Oasis(0, 0));
+            extraActions.get(0).initiate();
 
-            extraActions = new ArrayList<>();
             score = 0;
             mandatorySettlementPhase = MandatorySettlementPhase.hasNotUsed;
 

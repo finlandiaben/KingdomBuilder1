@@ -41,12 +41,9 @@ public class ScoreCard {
         System.out.println(player.getScore());
     }
 
-    public int merchantScore(Board board, Player player) {
-
-        return 0;
+    public void merchantScore(Board board) {
     }
 
-    
 
 
     public void knightScore(Board board, Player player) {
