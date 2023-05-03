@@ -91,7 +91,7 @@ public class Hex {
         if(isHighlighted){
 //            g.setColor(Color.RED);
 //            g.drawPolygon(pointsX, pointsY, 6);
-            g.setColor(new Color(255, 255, 255, 70));
+            g.setColor(new Color(255, 255, 255, 80));
             g.fillPolygon(pointsX, pointsY, 6);
         }
     }
