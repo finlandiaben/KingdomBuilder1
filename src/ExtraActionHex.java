@@ -45,9 +45,11 @@ public class ExtraActionHex extends Hex {
         for(int i = 0; i < extraActions.size(); i++){
             extraActions.get(i).draw(g);
         }
+        g.setColor(new Color(255, 255, 255, 80));
+        g.fillRect(getPointsX()[0] + 4 , getPointsY()[0] , 17, 17);
         g.setColor(Color.red);
         g.setFont(new Font("SansSerif", Font.PLAIN, 20));
-        g.drawString(extraActions.size() + "", getPointsX()[0] + 5, getPointsY()[0] + 12);
+        g.drawString(extraActions.size() + "", getPointsX()[0] + 7, getPointsY()[0] + 16);
     }
     public boolean isDepleted() {
         return extraActions.size() == 0;
