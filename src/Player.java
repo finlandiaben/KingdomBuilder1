@@ -73,7 +73,7 @@ public class Player {
             } else if (id == 2) {
                 settlementButtonColor = Color.black;
             } else if (id == 3) {
-                settlementButtonColor = Color.gray;
+                settlementButtonColor = new Color(173,166,166);
             }
         } catch(Exception e){
 
