@@ -57,11 +57,9 @@ public class Player {
             extraActions = new ArrayList<>();
 
             //testing
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 40; i++) {
                 settlements.add(new Settlement(this.id));
             }
-            extraActions.add(new Oasis(0, 0));
-            extraActions.get(0).initiate();
 
             score = 0;
             mandatorySettlementPhase = MandatorySettlementPhase.hasNotUsed;
@@ -194,6 +192,12 @@ public class Player {
     public boolean areAllExtraActionUsed() {
         for(ExtraAction a : extraActions) {
             if(!a.isUsed() && a.isIniated()) return false;
+        } return true;
+    }
+
+    public boolean areAllMovingExtraActionsUsed(){
+        for(ExtraAction a : extraActions){
+            if(!a.isUsed() && a.isIniated() && a.doesItMove()) return false;
         } return true;
     }
 

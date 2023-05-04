@@ -38,4 +38,5 @@ public class Settlement {
     public void draw(Graphics g, int x, int y){
         g.drawImage(image, x, y, imageSizeX, imageSizeY, null);
     }
+
 }

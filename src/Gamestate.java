@@ -242,8 +242,9 @@ public class Gamestate {
                 /*
                 resetting everything for the next player
                  */
-                if (isEnding && (turn + 1) % 4 == startingPlayer && players[turn].areAllExtraActionUsed()) {
-                    for(int i = 0; i  < 4; i++){
+
+                if (isEnding && (turn + 1) % 4 == startingPlayer) {
+                    for (int i = 0; i < 4; i++) {
                         scoreCards.minerScore(board, players[i]);
                     }
 
@@ -366,7 +367,7 @@ public class Gamestate {
                         g.setColor(Color.black);
                     }
                     case 3 -> {
-                        g.setColor(Color.gray);
+                        g.setColor(new Color(173,166,166));
                     }
                 }
 
