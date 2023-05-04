@@ -366,7 +366,7 @@ public class Gamestate {
                         g.setColor(Color.black);
                     }
                     case 3 -> {
-                        g.setColor(Color.gray);
+                        g.setColor(new Color(173,166,166));
                     }
                 }
 
