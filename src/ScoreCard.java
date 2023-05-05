@@ -43,6 +43,39 @@ public class ScoreCard {
         }
         return score;
     }
+    
+      public int farmerScore(Board board, Player player) {
+       int score = 0;
+       int[] sectorCounts = new int[4]; // There are 4 sectors on the game board
+
+       // Count the number of settlements owned by the player in each sector
+       for (int i = 0; i < 20; i++) {
+           for (int j = 0; j < 20; j++) {
+               Hex currentTile = board.getRow(i)[j];
+               if (currentTile.getSettlement() != null && currentTile.getSettlement().getOwnerId() == player.getId()) {
+                   int sectorIndex = getSectorIndex(i, j);
+                   sectorCounts[sectorIndex]++;
+               }
+           }
+       }
+
+       // Find the sector(s) with the fewest settlements owned by the player
+       int minCount = Integer.MAX_VALUE;
+       for (int i = 0; i < sectorCounts.length; i++) {
+           if (sectorCounts[i] < minCount) {
+               minCount = sectorCounts[i];
+           }
+       }
+
+       return minCount * 3;
+   }
+
+    private int getSectorIndex(int row, int col) {
+        // Sectors are numbered 0-3 in a 2x2 grid
+        int sectorRow = row / 10; // 10x10 tiles per sector
+        int sectorCol = col / 10;
+        return sectorRow * 2 + sectorCol;
+    }
 
     public int merchantScore(Board board, Player player) {
         int score = 0;
