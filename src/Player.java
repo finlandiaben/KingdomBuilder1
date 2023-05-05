@@ -57,7 +57,7 @@ public class Player {
             extraActions = new ArrayList<>();
 
             //testing
-            for (int i = 0; i < 12; i++) {
+            for (int i = 0; i < 40; i++) {
                 settlements.add(new Settlement(this.id));
             }
 

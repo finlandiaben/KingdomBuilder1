@@ -374,7 +374,7 @@ public class Gamestate {
                 }
 
                 int t = i + 1;
-                g.drawString(ranks[i], drawScoreX, drawScoreY + drawScoreSpacingY * i);
+                g.drawString(ranks[i] + ": " +players[i].getScore(), drawScoreX, drawScoreY + drawScoreSpacingY * i);
             }
 
         } else if (drawScoring) {
