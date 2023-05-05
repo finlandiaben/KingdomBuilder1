@@ -147,7 +147,9 @@ public class Gamestate {
                             movingExtraActionToUse.setAvailableMoves(board, players[turn], board.getAllHexes().get(i));
 
                             for (ExtraAction a : players[turn].getExtraActions()) {
-                                if (a.getExtraActionType().equals("harbor") && !a.isUsed()) a.setUsed(true);
+                                if (a.getExtraActionType().equals("harbor") && !a.isUsed()){
+                                    a.setUsed(true); break;
+                                }
                             }
 
                             message = "Click the highlighted hex you would like to settle";
@@ -165,7 +167,7 @@ public class Gamestate {
 
                                             for (ExtraAction a : players[turn].getExtraActions()) {
                                                 if (a.getExtraActionType().equals("paddock") && !a.isUsed())
-                                                    a.setUsed(true);
+                                                    a.setUsed(true); break;
                                             }
 
                                             message = "Click the highlighted hex you would like to settle";

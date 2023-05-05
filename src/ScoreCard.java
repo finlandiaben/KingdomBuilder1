@@ -43,10 +43,10 @@ public class ScoreCard {
 
     public void farmerScore(Board board, Player player) {
         int score = Integer.MAX_VALUE;
-        for(int i = 0; i < 4; i++){
+        for(int i = 1; i <= 4; i++){
             if(score > scoreQuadrant(board, i, player)) score = scoreQuadrant(board, i, player);
         }
-        player.setScore(score);
+        player.setScore(player.getScore() + score);
     }
 
     private int scoreQuadrant(Board board, int quadrant, Player player){
@@ -111,8 +111,8 @@ public class ScoreCard {
 
     public void knightScore(Board board, Player player) {
         int score = 0;
-        int tempScore = 0;
         for(int i = 0; i < 20; i++){
+            int tempScore = 0;
             for(Hex h : board.getRow(i)){
                 if(h!= null && h.getSettlement() != null && h.getSettlement().getOwnerId() == player.getId()){
                     tempScore += 2;
