@@ -2,7 +2,7 @@
 //todo bug: last player to play before game end cannot use extraactions
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import javax.swing.*;
 
 import java.awt.image.BufferedImage;
@@ -166,8 +166,9 @@ public class Gamestate {
                                             movingExtraActionToUse.setAvailableMoves(board, players[turn], board.getAllHexes().get(i));
 
                                             for (ExtraAction a : players[turn].getExtraActions()) {
-                                                if (a.getExtraActionType().equals("paddock") && !a.isUsed())
+                                                if (a.getExtraActionType().equals("paddock") && !a.isUsed()){
                                                     a.setUsed(true); break;
+                                                }
                                             }
 
                                             message = "Click the highlighted hex you would like to settle";
@@ -345,15 +346,21 @@ public class Gamestate {
             g.setFont(new Font("Algerian", Font.PLAIN, 20));
             g.drawString(message, logoX + 65, logoY + 600);
         } else if (drawLeaderBoard) {
-
-            String[] ranks = setRanks();
+//            String[] playersString = new String[4];
+//            for(int i = 0; i < 4; i++){
+//                int r = i;
+//                playersString[i] = "Player " +  r;
+//            }
+//
+//            int[] s = {players[0].getScore(), players[1].getScore(), players[2].getScore(), players[3].getScore()};
+            String[] ranks = oldSetRanks();
             board.drawBoard(g);
             scoreCards.draw(g);
             drawHeader(g);
             g.setColor(new Color(245, 229, 193));
             g.setFont(new Font("SansSerif", Font.PLAIN, 12));
             g.drawString(message, messageX, messageY);
-            g.fillRoundRect(drawScoreX - drawScoreBackgroundSpacingX, drawScoreY - drawScoreBackgroundSpacingY, drawScoreBackgroundSize, drawScoreBackgroundSize, 30, 30);
+            g.fillRoundRect(drawScoreX - drawScoreBackgroundSpacingX - 50, drawScoreY - drawScoreBackgroundSpacingY, drawScoreBackgroundSize + 120, drawScoreBackgroundSize, 30, 30);
             //todo
             g.setFont(new Font("SansSerif", Font.PLAIN, 20));
 
@@ -374,7 +381,12 @@ public class Gamestate {
                 }
 
                 int t = i + 1;
-                g.drawString(ranks[i] + ": " +players[i].getScore(), drawScoreX, drawScoreY + drawScoreSpacingY * i);
+//                if(ranks[i] == null){
+//                    g.drawString("Player " + t + " is " + "4th" + " with " + players[i].getScore() + " points!", drawScoreX - 60, drawScoreY + drawScoreSpacingY * i);
+//                }else{
+//                    g.drawString("Player " + t + " is " + ranks[i] + " with " + players[i].getScore() + " points!", drawScoreX - 60, drawScoreY + drawScoreSpacingY * i);
+//                }
+                g.drawString("Player " + t + " is " + ranks[i] + " with " + players[i].getScore() + " points!", drawScoreX - 65, drawScoreY + drawScoreSpacingY * i);
             }
 
         } else if (drawScoring) {
@@ -464,11 +476,11 @@ public class Gamestate {
                 y > yesOrNoButtonY && y < yesOrNoButtonY + yesOrNoButtonSize;
     }
 
-    private String[] setRanks(){
+    private String[] oldSetRanks() {
         String[] ranks = new String[players.length];
         int[] scores = new int[players.length];
 
-        for(int i = 0; i < scores.length; i++) {
+        for (int i = 0; i < scores.length; i++) {
             scores[i] = players[i].getScore();
         }
 
@@ -476,58 +488,58 @@ public class Gamestate {
 
         int counter = 1;
         int rank = 1;
-        for(int i = scores.length - 1; i >= 0; ) {
-            for(int j = i - 1; j >= 0; j--) {
-                if(scores[j] == scores[i]) {
+        for (int i = scores.length - 1; i >= 0; ) {
+            for (int j = i - 1; j >= 0; j--) {
+                if (scores[j] == scores[i]) {
                     counter++;
                 }
             }
 
 
-            switch(rank) {
+            switch (rank) {
                 case 1:
-                    for(int j = 0; j < ranks.length; j++) {
-                        if(players[j].getScore() == scores[i]) {
+                    for (int j = 0; j < ranks.length; j++) {
+                        if (players[j].getScore() == scores[i]) {
                             ranks[j] = "1st";
 
-                            if(counter > 1) {
-                                ranks[j] += " (tie)";
+                            if (counter > 1) {
+//                                ranks[j] += " (tie)";
                             }
                         }
                     }
                     break;
 
                 case 2:
-                    for(int j = 0; j < ranks.length; j++) {
-                        if(players[j].getScore() == scores[i]) {
+                    for (int j = 0; j < ranks.length; j++) {
+                        if (players[j].getScore() == scores[i]) {
                             ranks[j] = "2nd";
 
-                            if(counter > 1) {
-                                ranks[j] += " (tie)";
+                            if (counter > 1) {
+//                                ranks[j] += " (tie)";
                             }
                         }
                     }
                     break;
 
                 case 3:
-                    for(int j = 0; j < ranks.length; j++) {
-                        if(players[j].getScore() == scores[i]) {
+                    for (int j = 0; j < ranks.length; j++) {
+                        if (players[j].getScore() == scores[i]) {
                             ranks[j] = "3rd";
 
-                            if(counter > 1) {
-                                ranks[j] += " (tie)";
+                            if (counter > 1) {
+//                                ranks[j] += " (tie)";
                             }
                         }
                     }
                     break;
 
                 case 4:
-                    for(int j = 0; j < ranks.length; j++) {
-                        if(players[j].getScore() == scores[i]) {
+                    for (int j = 0; j < ranks.length; j++) {
+                        if (players[j].getScore() == scores[i]) {
                             ranks[j] = "4th";
 
-                            if(counter > 1) {
-                                ranks[j] += " (tie)";
+                            if (counter > 1) {
+//                                ranks[j] += " (tie)";
                             }
                         }
                     }
@@ -540,4 +552,27 @@ public class Gamestate {
 
         return ranks;
     }
+
+
+    public String[] setRanks(int[] scores, String[] players) {
+        ArrayList<Map.Entry<Integer, String>> playerScores = new ArrayList<>();
+        for (int i = 0; i < scores.length; i++) {
+            playerScores.add(new AbstractMap.SimpleEntry<>(scores[i], players[i]));
+        }
+
+        Collections.sort(playerScores, (a, b) -> {
+            if (a.getKey().equals(b.getKey())) {
+                return a.getValue().compareTo(b.getValue());
+            }
+            return b.getKey().compareTo(a.getKey());
+        });
+
+        String[] sortedPlayers = new String[players.length];
+        for (int i = 0; i < playerScores.size(); i++) {
+            sortedPlayers[i] = playerScores.get(i).getValue();
+        }
+
+        return sortedPlayers;
+    }
 }
+
