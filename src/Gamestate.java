@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 public class Gamestate {
 
     private BufferedImage logo;
+    private BufferedImage startChip;
     public static final int logoSizeX = 350;
     public static final int logoSizeY = 200;
     public static final int logoX = 1200 / 2 - logoSizeX / 2;
@@ -39,9 +40,9 @@ public class Gamestate {
     private static final int messageX = 826;
     private static final int messageY = 625;
     public static final int headerX = 10;
-    public static final int headerY = 15;
+    public static final int headerY = 10;
     public static final int headerWidth = 1125;
-    public static final int headerHeight = 35;
+    public static final int headerHeight = 30;
     public static final int headerMessageSpacing = 170;
     public static final int drawScoreX = 925;
     public static final int drawScoreY = 400;
@@ -54,6 +55,7 @@ public class Gamestate {
     public Gamestate() {
         try {
             logo = ImageIO.read(Gamestate.class.getResource("/Images/logo.png"));
+            startChip = ImageIO.read(Player.class.getResource("/Images/KB-startChip.png"));
             drawStart = true;
             players = new Player[4];
             for (int i = 0; i < 4; i++) players[i] = new Player(i);
@@ -462,7 +464,13 @@ public class Gamestate {
                 }
             }
             int t = i + 1;
-            g.drawString("Player " + t + ": " + players[i].getSettlementsRemaining(), headerX + 20 + headerMessageSpacing * (i + 1), headerY + 22);
+            if(startingPlayer == i) {
+                g.drawImage(startChip, headerX + 20 + headerMessageSpacing * (i + 1) - 22, headerY + 5, 22, 22, null);
+                g.drawString("Player " + t + ": " + players[i].getSettlementsRemaining(), headerX + 20 + headerMessageSpacing * (i + 1), headerY + 22);
+            }else{
+                g.drawString("Player " + t + ": " + players[i].getSettlementsRemaining(), headerX + 20 + headerMessageSpacing * (i + 1), headerY + 22);
+            }
+
         }
     }
 

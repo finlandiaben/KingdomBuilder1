@@ -12,7 +12,7 @@ public class Board {
     public static final int BOARD_QUADRANT_SIZE_X = 305;
     public static final int BOARD_QUADRANT_SIZE_Y = 290;
     private static final int boardX = 10;
-    private static final int boardY = 800 / 2 - 290 + 50;
+    private static final int boardY = 800 / 2 - 290 + 70;
     private static final int boardAdjustX = 14;
     private static final int boardAdjustY = 9;
 
@@ -59,7 +59,27 @@ public class Board {
     public Board(){
         try{
 
-            File boardAsText = new File("src/Boards/defaultBoard.txt");
+            String boardAsText = "4 4 5 5 5 1 4 5 5 3 0 0 6 1 1 5 5 4 4 4\n" +
+                    "4 3 5 5 1 4 5 5 3 3 0 6 1 3 3 5 5 5 4 4\n" +
+                    "4 3 3 5 1 4 4 3 3 3 0 0 1 3 3 5 5 7 3 4\n" +
+                    "3 3 5 5 1 4 2 3 0 0 1 1 1 3 4 5 3 3 3 3\n" +
+                    "6 3 8 5 1 4 0 0 0 0 1 1 1 1 4 4 4 4 3 3\n" +
+                    "6 6 5 1 4 4 2 2 0 0 1 5 5 1 4 4 6 6 0 6\n" +
+                    "6 6 1 1 1 4 0 0 0 6 1 5 6 5 1 4 6 6 0 6\n" +
+                    "1 1 4 4 1 1 11 6 2 6 1 8 6 3 1 7 0 0 6 1\n" +
+                    "1 0 8 4 1 2 1 6 6 6 1 1 6 3 1 1 1 0 0 1\n" +
+                    "1 0 0 1 1 1 1 6 6 6 1 1 1 1 1 1 1 1 1 1\n" +
+                    "6 6 6 0 0 1 0 0 0 0 3 0 0 2 2 0 0 6 6 6\n" +
+                    "2 2 6 0 0 1 0 0 0 0 3 3 0 0 0 2 2 6 6 6\n" +
+                    "2 2 6 2 2 1 0 0 9 3 3 3 3 3 3 3 3 2 2 2\n" +
+                    "2 6 2 2 1 2 0 3 3 3 1 1 3 8 4 4 5 5 2 2\n" +
+                    "6 6 5 5 1 2 2 6 3 3 3 3 1 1 4 4 4 5 5 6\n" +
+                    "6 5 5 1 6 6 6 2 3 3 3 6 6 1 4 5 5 6 6 6\n" +
+                    "6 9 5 5 1 3 3 3 3 3 0 3 10 6 1 5 5 10 6 4\n" +
+                    "4 4 5 1 4 8 4 3 4 5 0 0 6 1 5 5 4 4 4 4\n" +
+                    "4 4 5 5 1 4 4 4 4 5 0 0 0 1 5 5 5 4 4 4\n" +
+                    "4 4 5 5 1 4 4 4 5 5 0 0 1 1 5 5 5 4 4 4\n" +
+                    "\n";
             Scanner sc = new Scanner(boardAsText);
             allHexes = new ArrayList<>();
             hexes = new Hex[20][40];
